@@ -63,9 +63,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //初始化视图
     private void initView() {
         //登录层、下拉层、其它登录方式层
-        mLlLoginLayer = findViewById(R.id.ll_login_layer);
-        mLlLoginPull = findViewById(R.id.ll_login_pull);
-        mLlLoginOptions = findViewById(R.id.ll_login_options);
+//        mLlLoginLayer = findViewById(R.id.ll_login_layer);
+//        mLlLoginPull = findViewById(R.id.ll_login_pull);
+//        mLlLoginOptions = findViewById(R.id.ll_login_options);
 
         //导航栏+返回按钮
         mLayBackBar = findViewById(R.id.ly_retrieve_bar);
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mTvLoginForgetPwd.setOnClickListener(this);
 
         //注册点击事件
-        mLlLoginPull.setOnClickListener(this);
+//        mLlLoginPull.setOnClickListener(this);
         mIbNavigationBack.setOnClickListener(this);
         mEtLoginUsername.setOnClickListener(this);
         mIvLoginUsernameDel.setOnClickListener(this);
@@ -101,9 +101,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mBtLoginRegister.setOnClickListener(this);
         mEtLoginPwd.setOnClickListener(this);
         mIvLoginPwdDel.setOnClickListener(this);
-        findViewById(R.id.ib_login_weibo).setOnClickListener(this);
-        findViewById(R.id.ib_login_qq).setOnClickListener(this);
-        findViewById(R.id.ib_login_wx).setOnClickListener(this);
+//        findViewById(R.id.ib_login_weibo).setOnClickListener(this);
+//        findViewById(R.id.ib_login_qq).setOnClickListener(this);
+//        findViewById(R.id.ib_login_wx).setOnClickListener(this);
 
         //注册其它事件
         mLayBackBar.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -165,32 +165,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //忘记密码
 //                startActivity(new Intent(LoginActivity.this, ForgetPwdActivity.class));
                 break;
-            case R.id.ll_login_layer:
-            case R.id.ll_login_pull:
-                mLlLoginPull.animate().cancel();
-                mLlLoginLayer.animate().cancel();
-
-                int height = mLlLoginOptions.getHeight();
-                float progress = (mLlLoginLayer.getTag() != null && mLlLoginLayer.getTag() instanceof Float) ? (float) mLlLoginLayer.getTag() : 1;
-                int time = (int) (360 * progress);
-
-                if (mLlLoginPull.getTag() != null) {
-                    mLlLoginPull.setTag(null);
-                    glide(height, progress, time);
-                } else {
-                    mLlLoginPull.setTag(true);
-                    upGlide(height, progress, time);
-                }
-                break;
-            case R.id.ib_login_weibo:
-                weiboLogin();
-                break;
-            case R.id.ib_login_qq:
-                qqLogin();
-                break;
-            case R.id.ib_login_wx:
-                weixinLogin();
-                break;
+//            case R.id.ll_login_layer:
+//            case R.id.ll_login_pull:
+//                mLlLoginPull.animate().cancel();
+//                mLlLoginLayer.animate().cancel();
+//
+//                int height = mLlLoginOptions.getHeight();
+//                float progress = (mLlLoginLayer.getTag() != null && mLlLoginLayer.getTag() instanceof Float) ? (float) mLlLoginLayer.getTag() : 1;
+//                int time = (int) (360 * progress);
+//
+//                if (mLlLoginPull.getTag() != null) {
+//                    mLlLoginPull.setTag(null);
+//                    glide(height, progress, time);
+//                } else {
+//                    mLlLoginPull.setTag(true);
+//                    upGlide(height, progress, time);
+//                }
+//                break;
+//            case R.id.ib_login_weibo:
+//                weiboLogin();
+//                break;
+//            case R.id.ib_login_qq:
+//                qqLogin();
+//                break;
+//            case R.id.ib_login_wx:
+//                weixinLogin();
+//                break;
             default:
                 break;
         }

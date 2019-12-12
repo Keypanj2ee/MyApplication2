@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment {
 //        });
 
         // 请选择您的初始化方式
-        initAccessToken();
+//        initAccessToken();
         //initAccessTokenWithAkSk();
 
         //初始化图片
@@ -348,10 +348,12 @@ public class HomeFragment extends Fragment {
         }, "aip.license", getActivity().getApplicationContext());
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // 释放内存资源
-        OCR.getInstance(getActivity()).release();
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        // 释放内存资源
+//        OCR.getInstance(getActivity()).release();
+//    }
+
+
 }

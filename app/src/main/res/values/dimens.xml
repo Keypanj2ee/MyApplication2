@@ -12,4 +12,5 @@
     <dimen name="lay_16">16.0dip</dimen>
 
     <dimen name="word_size">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
