@@ -20,6 +20,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:entries="@array/dic_type"/>
+
     <include layout="@layout/content_device_mgr" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,6 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="#2FFFFFFF"
+        app:fabSize="normal"
+        app:rippleColor="#FFFFFF"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
