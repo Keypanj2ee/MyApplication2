@@ -1,7 +1,5 @@
 package com.example.myapplication.ui.login;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -11,8 +9,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,16 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.model.LoginViewModel;
 import com.example.myapplication.ui.MainActivity;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, ViewTreeObserver.OnGlobalLayoutListener, TextWatcher {
+public class LoginActivity<LoginActivityBinding> extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener, ViewTreeObserver.OnGlobalLayoutListener, TextWatcher {
 
     private ImageButton mIbNavigationBack;
-    private LinearLayout mLlLoginPull;
-    private View mLlLoginLayer;
-    private LinearLayout mLlLoginOptions;
     private EditText mEtLoginUsername;
     private EditText mEtLoginPwd;
     private LinearLayout mLlLoginUsername;
@@ -51,22 +48,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private int mLogoHeight;
     private int mLogoWidth;
 
+    LoginViewModel loginViewModel;
+    ViewDataBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // 初始化ViewModel实例对象.
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+
+        //初始化DataBinding对象.
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
+        binding.setLifecycleOwner(this);
+
         initView();
     }
 
     //初始化视图
     private void initView() {
-        //登录层、下拉层、其它登录方式层
-//        mLlLoginLayer = findViewById(R.id.ll_login_layer);
-//        mLlLoginPull = findViewById(R.id.ll_login_pull);
-//        mLlLoginOptions = findViewById(R.id.ll_login_options);
-
         //导航栏+返回按钮
         mLayBackBar = findViewById(R.id.ly_retrieve_bar);
         mIbNavigationBack = findViewById(R.id.ib_navigation_back);
@@ -93,7 +93,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mTvLoginForgetPwd.setOnClickListener(this);
 
         //注册点击事件
-//        mLlLoginPull.setOnClickListener(this);
         mIbNavigationBack.setOnClickListener(this);
         mEtLoginUsername.setOnClickListener(this);
         mIvLoginUsernameDel.setOnClickListener(this);
@@ -101,9 +100,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mBtLoginRegister.setOnClickListener(this);
         mEtLoginPwd.setOnClickListener(this);
         mIvLoginPwdDel.setOnClickListener(this);
-//        findViewById(R.id.ib_login_weibo).setOnClickListener(this);
-//        findViewById(R.id.ib_login_qq).setOnClickListener(this);
-//        findViewById(R.id.ib_login_wx).setOnClickListener(this);
 
         //注册其它事件
         mLayBackBar.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -165,32 +161,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //忘记密码
 //                startActivity(new Intent(LoginActivity.this, ForgetPwdActivity.class));
                 break;
-//            case R.id.ll_login_layer:
-//            case R.id.ll_login_pull:
-//                mLlLoginPull.animate().cancel();
-//                mLlLoginLayer.animate().cancel();
-//
-//                int height = mLlLoginOptions.getHeight();
-//                float progress = (mLlLoginLayer.getTag() != null && mLlLoginLayer.getTag() instanceof Float) ? (float) mLlLoginLayer.getTag() : 1;
-//                int time = (int) (360 * progress);
-//
-//                if (mLlLoginPull.getTag() != null) {
-//                    mLlLoginPull.setTag(null);
-//                    glide(height, progress, time);
-//                } else {
-//                    mLlLoginPull.setTag(true);
-//                    upGlide(height, progress, time);
-//                }
-//                break;
-//            case R.id.ib_login_weibo:
-//                weiboLogin();
-//                break;
-//            case R.id.ib_login_qq:
-//                qqLogin();
-//                break;
-//            case R.id.ib_login_wx:
-//                weixinLogin();
-//                break;
             default:
                 break;
         }
@@ -267,20 +237,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 
-    //微博登录
-    private void weiboLogin() {
-
-    }
-
-    //QQ登录
-    private void qqLogin() {
-
-    }
-
-    //微信登录
-    private void weixinLogin() {
-
-    }
 
     /**
      * 显示Toast
@@ -313,84 +269,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mLlLoginUsername.setActivated(false);
             }
         }
-    }
-
-    /**
-     * menu glide
-     *
-     * @param height   height
-     * @param progress progress
-     * @param time     time
-     */
-    private void glide(int height, float progress, int time) {
-        mLlLoginPull.animate()
-                .translationYBy(height - height * progress)
-                .translationY(height)
-                .setDuration(time)
-                .start();
-
-        mLlLoginLayer.animate()
-                .alphaBy(1 * progress)
-                .alpha(0)
-                .setDuration(time)
-                .setListener(new AnimatorListenerAdapter() {
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        if (animation instanceof ValueAnimator) {
-                            mLlLoginLayer.setTag(((ValueAnimator) animation).getAnimatedValue());
-                        }
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        if (animation instanceof ValueAnimator) {
-                            mLlLoginLayer.setTag(((ValueAnimator) animation).getAnimatedValue());
-                        }
-                        mLlLoginLayer.setVisibility(View.GONE);
-                    }
-                })
-                .start();
-    }
-
-    /**
-     * menu up glide
-     *
-     * @param height   height
-     * @param progress progress
-     * @param time     time
-     */
-    private void upGlide(int height, float progress, int time) {
-        mLlLoginPull.animate()
-                .translationYBy(height * progress)
-                .translationY(0)
-                .setDuration(time)
-                .start();
-        mLlLoginLayer.animate()
-                .alphaBy(1 - progress)
-                .alpha(1)
-                .setDuration(time)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                        mLlLoginLayer.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                        if (animation instanceof ValueAnimator) {
-                            mLlLoginLayer.setTag(((ValueAnimator) animation).getAnimatedValue());
-                        }
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        if (animation instanceof ValueAnimator) {
-                            mLlLoginLayer.setTag(((ValueAnimator) animation).getAnimatedValue());
-                        }
-                    }
-                })
-                .start();
     }
 
 

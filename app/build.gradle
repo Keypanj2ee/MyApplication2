@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        dataBinding.enabled = true
     }
     buildTypes {
         release {
@@ -36,4 +37,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation files('libs/ocr-sdk.jar')
     implementation project(path: ':ocr_ui')
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }

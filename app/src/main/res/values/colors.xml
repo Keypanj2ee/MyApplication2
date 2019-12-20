@@ -26,6 +26,6 @@
     <color name="account_input_color">#c9c9c9</color>
     <color name="account_pressed_true">#802196F3</color>
 
-    <color name="bg_press">#ebebeb</color>\
+    <color name="bg_press">#EBEBEB</color>\
     <color name="bg_press_material">#d4d4d4</color>
 </resources>
